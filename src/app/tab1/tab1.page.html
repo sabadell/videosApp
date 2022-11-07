@@ -1,74 +1,34 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark">
-    <ion-title>
-      Videos App
-    </ion-title>
+    <ion-title> {{titulo}} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light" align="center">
   <ion-searchbar placeholder="Buscar"></ion-searchbar>
   <ion-list>
-    <ion-item-sliding>
-    <ion-item lines="full">
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/hVPMjz4GXxxS4dMcaxTComi3KzR.jpg" />
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">
-      <div>
-        <h1>Pinoquio 2020</h1>
-        <p>10/03/2000 (BR)</p>
-        <p>Fantasia, Drama 5h 9m</p>
-      </div>
-      </ion-label>
-      <ion-chip>70%</ion-chip>
-    </ion-item>
-    <ion-item-options side="end">
-      <ion-item-option>
-      <ion-icon slot="icon-only" name="star"></ion-icon>
-    </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-    <ion-item>
-
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/2QlRq0MEx8IEODKNbGZyu3Sz5UV.jpg" />
-      </ion-thumbnail>
-      <div>
-        <h1>Avatar 2010</h1>
-        <p>10/03/2000 (BR)</p>
-        <p>Fantasia, Drama, Crime 1h 9m</p>
-      </div>
-    </ion-item>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/wd7b4Nv9QBHDTIjc2m7sr0IUMoh.jpg" />
-      </ion-thumbnail>
-      <ion-label><div>
-        <h1>Batman 2011</h1>
-        <p>10/03/2000 (BR)</p>
-        <p>Crime 3h 9m</p>
-      </div></ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-thumbnail slot="start">
-    <img alt="Silhouette of mountains" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/tptjnB2LDbuUWya9Cx5sQtv5hqb.jpg" />
-  </ion-thumbnail>
-      <ion-label><div>
-        <h1>Pulp Fiction 2009</h1>
-        <p>10/03/2000 (BR)</p>
-        <p>Fantasia, Drama, Crime 3h 9m</p>
-      </div></ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-thumbnail slot="start">
-        <img alt="Silhouette of mountains" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/14hEqW67IiHlKpzKMLUXyktzZIV.jpg" />
-      </ion-thumbnail>
-      <ion-label><div>
-        <h1>A Espera de um Milagre 2003</h1>
-        <p>10/03/2000 (BR)</p>
-        <p>Fantasia, Drama, Crime 3h 9m</p>
-      </div></ion-label>
-    </ion-item>
+    <ion-item-sliding *ngFor="let filme of listaVideos">
+      <ion-item lines="full" (click)="exibirFilme(filme)">
+        <ion-thumbnail slot="start">
+          <img
+            alt="Silhouette of mountains"
+            [src]="filme.cartaz"
+          />
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          <div>
+            <h1>{{filme.nome}}</h1>
+            <p>{{filme.lancamento}} - {{filme.duracao}}</p>
+            <ion-badge color="light" *ngFor="let genero of filme.generos">{{genero}}</ion-badge>
+          </div>
+        </ion-label>
+        <ion-chip>{{filme.classificacao}}%</ion-chip>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="orange" (click)="exibirAlertaFavorito()">
+          <ion-icon slot="icon-only" name="star"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>
