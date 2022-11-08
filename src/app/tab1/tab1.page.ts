@@ -1,9 +1,11 @@
+import { IListaFilmes } from './../models/ifilmeapi.models';
 import { IFilme } from './../models/ifilme.models';
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { DadosService } from '../services/dados.service';
 import { Router } from '@angular/router';
+import { FilmeService } from '../services/filme.service';
 
 
 
@@ -13,7 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  titulo='VideosApp';
+  titulo='Filmes';
+  listaFilme: IListaFilmes;
   listaVideos: IFilme[] = [
     {
       nome: 'Aterrorizante 2 (2022)',
@@ -57,7 +60,24 @@ export class Tab1Page {
     public alertController: AlertController,
     public toastController: ToastController,
     public dadosService: DadosService,
-    public route: Router) {}
+    public filmeService: FilmeService,
+    public route: Router
+
+    ) {}
+
+    buscarFilme(evento: any)
+    {
+
+      const busca=evento.target.value;
+      if(busca && busca.trim()!=='')
+      {
+          this.filmeService.buscarFilme(busca).subscribe((data) => {
+            console.log('Data received', data);
+            this.listaFilme=data;
+        });
+      }
+
+    }
 
     exibirFilme(filme: IFilme)
     {
