@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AQuedaPageRoutingModule } from './a-queda-routing.module';
+import { LoginPageRoutingModule } from './login-routing.module';
 
-import { AQuedaPage } from './a-queda.page';
+import { LoginPage } from './login.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AQuedaPageRoutingModule
+    LoginPageRoutingModule
   ],
-  declarations: [AQuedaPage]
+  declarations: [LoginPage]
 })
-export class AQuedaPageModule {}
+export class LoginPageModule {}

@@ -1,11 +1,13 @@
-import { IListaFilmes } from './../models/ifilmeapi.models';
+import { IGenero } from './../models/genero.models';
+import { IListaFilmes, IFilmeApi } from './../models/ifilmeapi.models';
 import { IFilme } from './../models/ifilme.models';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { DadosService } from '../services/dados.service';
 import { Router } from '@angular/router';
 import { FilmeService } from '../services/filme.service';
+import { GenerosService } from '../services/generos.service';
 
 
 
@@ -14,9 +16,10 @@ import { FilmeService } from '../services/filme.service';
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
   titulo='Filmes';
   listaFilme: IListaFilmes;
+  generos: string[]=[];
   listaVideos: IFilme[] = [
     {
       nome: 'Aterrorizante 2 (2022)',
@@ -61,6 +64,7 @@ export class Tab1Page {
     public toastController: ToastController,
     public dadosService: DadosService,
     public filmeService: FilmeService,
+    public generoService: GenerosService,
     public route: Router
 
     ) {}
@@ -79,7 +83,7 @@ export class Tab1Page {
 
     }
 
-    exibirFilme(filme: IFilme)
+    exibirFilme(filme: IFilmeApi)
     {
         this.dadosService.guardarDados('filme',filme);
         this.route.navigateByUrl('/dados-filme');
@@ -121,4 +125,14 @@ export class Tab1Page {
 
     await toast.present();
   }
+ ngOnInit(): void {
+    this.generoService.buscarGeneros().subscribe((data) =>
+    {
+       data.genres.forEach(genero=>{
+        this.generos[genero.id]=genero.name;
+        this.dadosService.guardarDados('generos',this.generos);
+    });
+    });
+ }
+
 }

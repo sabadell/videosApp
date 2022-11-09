@@ -10,16 +10,21 @@
 <ion-content colo="light">
   <ion-card *ngIf="filme">
     <ion-card-header>
-     <img [src]="filme.cartaz" />
+      <img *ngIf="filme.poster_path"
+      alt="Silhouette of mountains"
+      src="https://www.themoviedb.org/t/p/w500/{{filme.poster_path}}"
+    />
+    <ion-icon *ngIf="!filme.poster_path" name="videocam-off"></ion-icon>
     </ion-card-header>
 
     <ion-card-content>
-      <h1>{{filme.nome}} - <ion-chip color="success">{{filme.classificacao}}%</ion-chip> </h1>
-     <p>{{filme.lancamento}} - {{filme.duracao}}</p>
+      <h1>{{filme.title}} -
+        <ion-chip >{{filme.vote_average}}</ion-chip>
+      </h1>
+     <p>{{filme.release_date | date:'shortDate'}}</p>
     </ion-card-content>
     <ion-item>
-      <ion-badge color="light" *ngFor="let genero of filme.generos">
-{{genero}}
+      <ion-badge color="light" *ngFor="let generoId of filme.genre_ids">{{generos[generoId]}}
       </ion-badge>
     </ion-item>
   </ion-card>
